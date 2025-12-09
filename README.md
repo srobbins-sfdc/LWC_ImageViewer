@@ -49,7 +49,7 @@ force-app/
 
 1. **Clone this repository:**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/LWC_ImageViewer.git
+   git clone https://github.com/srobbins-sfdc/LWC_ImageViewer.git
    cd LWC_ImageViewer
    ```
 
