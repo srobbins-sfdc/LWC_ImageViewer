@@ -1,0 +1,137 @@
+<template>
+    <lightning-card title={cardTitle} icon-name="standard:file">
+        <div class="slds-m-around_medium">
+            <!-- Display when images are loaded -->
+            <template if:true={hasImages}>
+                <div class="image-container">
+                    <!-- Image Display Area with Zoom Controls -->
+                    <div class="image-viewer-wrapper">
+                        <!-- Zoom Controls -->
+                        <div class="zoom-controls">
+                            <lightning-button-icon
+                                icon-name="utility:zoomin"
+                                variant="border-filled"
+                                alternative-text="Zoom In"
+                                title="Zoom In"
+                                onclick={handleZoomIn}
+                                disabled={isMaxZoom}
+                                class="zoom-button">
+                            </lightning-button-icon>
+                            <lightning-button-icon
+                                icon-name="utility:zoomout"
+                                variant="border-filled"
+                                alternative-text="Zoom Out"
+                                title="Zoom Out"
+                                onclick={handleZoomOut}
+                                disabled={isMinZoom}
+                                class="zoom-button">
+                            </lightning-button-icon>
+                            <lightning-button-icon
+                                icon-name="utility:refresh"
+                                variant="border-filled"
+                                alternative-text="Reset Zoom"
+                                title="Reset Zoom"
+                                onclick={handleResetZoom}
+                                class="zoom-button">
+                            </lightning-button-icon>
+                            <span class="zoom-level slds-text-body_small">
+                                {zoomPercentage}
+                            </span>
+                        </div>
+                        
+                        <!-- Image Container with Pan Support -->
+                        <div 
+                            class="image-viewport"
+                            onmousedown={handleMouseDown}
+                            onmouseup={handleMouseUp}
+                            onmousemove={handleMouseMove}
+                            onmouseleave={handleMouseLeave}
+                            onwheel={handleWheel}>
+                            <img 
+                                src={currentImageUrl} 
+                                alt={currentImageTitle} 
+                                class="preview-image"
+                                style={imageStyle}
+                                onerror={handleImageError}
+                                draggable="false"
+                            />
+                        </div>
+                        
+                        <!-- Image Info -->
+                        <div class="image-info">
+                            <p class="slds-text-body_small slds-text-color_weak">
+                                {imageCounter}
+                            </p>
+                            <p class="slds-text-body_regular slds-m-top_x-small">
+                                {currentImageTitle}
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Navigation Controls at Bottom -->
+                    <div class="navigation-controls">
+                        <lightning-button-icon
+                            icon-name="utility:chevronleft"
+                            variant="border-filled"
+                            alternative-text="Previous"
+                            title="Previous Image"
+                            onclick={handlePrevious}
+                            disabled={isFirstImage}
+                            class="nav-button">
+                        </lightning-button-icon>
+                        <span class="slds-m-horizontal_medium"></span>
+                        <lightning-button-icon
+                            icon-name="utility:chevronright"
+                            variant="border-filled"
+                            alternative-text="Next"
+                            title="Next Image"
+                            onclick={handleNext}
+                            disabled={isLastImage}
+                            class="nav-button">
+                        </lightning-button-icon>
+                    </div>
+                </div>
+            </template>
+            
+            <!-- Display when loading -->
+            <template if:true={isLoading}>
+                <div class="slds-align_absolute-center slds-m-around_large">
+                    <lightning-spinner 
+                        alternative-text="Loading images" 
+                        size="medium">
+                    </lightning-spinner>
+                </div>
+            </template>
+            
+            <!-- Display when no images found -->
+            <template if:true={showNoImagesMessage}>
+                <div class="slds-align_absolute-center slds-m-around_large">
+                    <lightning-icon 
+                        icon-name="utility:info" 
+                        size="small"
+                        class="slds-m-right_x-small">
+                    </lightning-icon>
+                    <p class="slds-text-body_regular">
+                        {noImagesMessage}
+                    </p>
+                </div>
+            </template>
+            
+            <!-- Display error message -->
+            <template if:true={errorMessage}>
+                <div class="slds-align_absolute-center slds-m-around_large">
+                    <lightning-icon 
+                        icon-name="utility:error" 
+                        size="small"
+                        variant="error"
+                        class="slds-m-right_x-small">
+                    </lightning-icon>
+                    <p class="slds-text-body_regular slds-text-color_error">
+                        {errorMessage}
+                    </p>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
+

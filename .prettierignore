@@ -1,0 +1,18 @@
+# .prettierignore
+
+# Ignore all package-lock.json files
+package-lock.json
+
+# Ignore all node_modules folders
+**/node_modules/**
+
+# Ignore .sfdx folder
+.sfdx/
+.sf/
+
+# Ignore lwc configuration
+**/lwc/**/*.css
+
+# Ignore static resources
+**/staticresources/**
+
